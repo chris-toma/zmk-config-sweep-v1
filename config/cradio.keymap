@@ -4,9 +4,65 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
 
 
 / {
+    behaviors {
+        homey_left: homey_left {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MODS_LEFT_HAND";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "tap-preferred";
+            #binding-cells = <2>;
+            tapping-term-ms = <270>;
+            hold-trigger-on-release;
+            quick-tap-ms = <300>;
+            require-prior-idle-ms = <170>;
+            hold-trigger-key-positions = <39 40 41 32 8 20 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35>;
+        };
+
+        homey_right: homey_right {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MODS_RIGHT_HAND";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "tap-preferred";
+            #binding-cells = <2>;
+            tapping-term-ms = <270>;
+            hold-trigger-on-release;
+            quick-tap-ms = <300>;
+            require-prior-idle-ms = <170>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
+        };
+
+        shift_left: shift_left {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MODS_LEFT_SHIFT_SHIFT";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "tap-preferred";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <300>;
+            require-prior-idle-ms = <80>;
+            hold-trigger-key-positions = <32 8 20 6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35>;
+        };
+
+        shift_right: shift_right {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MODS_RIGHT_SHIFT_SHIFT";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "tap-preferred";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <300>;
+            require-prior-idle-ms = <80>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29>;
+        };
+    };
     keymap {
         compatible = "zmk,keymap";
         default_layer {
@@ -16,7 +72,7 @@
             &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  A       │  S       │  D       │  F       │  G       │   │  H       │  J       │  K       │  L       │ ' "      │
-            &kp A        &kpS       &kpD       &kpF     &kp G          &kp H      &kpJ        &kpK       &kpL        &kp'
+            &shift_left LEFT_SHIFT A  &homey_left LEFT_CONTROL S  &homey_left LEFT_ALT D  &homey_left LEFT_COMMAND F  &kp G           &kp H        &homey_right RIGHT_COMMAND J  &homey_right RIGHT_ALT K  &homey_right RIGHT_CONTROL L  &shift_right RIGHT_SHIFT SEMICOLON
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
