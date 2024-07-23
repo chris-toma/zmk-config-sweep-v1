@@ -1,11 +1,13 @@
-// Copyright (c) 2022 The ZMK Contributors
-// SPDX-License-Identifier: MIT
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
-
 
 / {
     behaviors {
@@ -63,56 +65,61 @@
             hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29>;
         };
     };
+
     keymap {
         compatible = "zmk,keymap";
+
         default_layer {
+            // -----------------------------------------------------------------------------------------
+            // |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  |
+            // |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |
+            // |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  |
+            //                    | GUI | LWR |   | ENT | RSE  |
+
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  Q       │  W       │  E       │  R       │  T       │   │  Y       │  U       │  I       │  O       │  P       │
-            &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  A       │  S       │  D       │  F       │  G       │   │  H       │  J       │  K       │  L       │ ' "      │
-            &shift_left LEFT_SHIFT A  &homey_left LEFT_CONTROL S  &homey_left LEFT_ALT D  &homey_left LEFT_COMMAND F  &kp G           &kp H        &homey_right RIGHT_COMMAND J  &homey_right RIGHT_ALT K  &homey_right RIGHT_CONTROL L  &shift_right RIGHT_SHIFT SEMICOLON
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
-            &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &lt 2 TAB   &kp ENTER     &kp SPACE  &lt 1 BSPC
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+&kp Q                     &kp W                       &kp E                   &kp R                       &kp T           &kp Y        &kp U                         &kp I                     &kp O                         &kp P                               
+&shift_left LEFT_SHIFT A  &homey_left LEFT_CONTROL S  &homey_left LEFT_ALT D  &homey_left LEFT_COMMAND F  &kp G           &kp H        &homey_right RIGHT_COMMAND J  &homey_right RIGHT_ALT K  &homey_right RIGHT_CONTROL L  &shift_right RIGHT_SHIFT SEMICOLON  
+&kp Z                     &kp X                       &kp C                   &kp V                       &kp B           &kp N        &kp M                         &kp COMMA                 &kp DOT                       &kp FSLH                            
+                                                             &lt 3 LEFT_COMMAND      &lt 1 ESCAPE                &lt 1 ESCAPE    &lt 2 SPACE  &lt 2 SPACE                   &kp RALT
             >;
         };
 
-        right_layer {
+        nav {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
+            // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
+            // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ INSERT   │  1       │  2       │  3       │          │   │ HOME     │ PAGE DN  │ PAGE UP  │ END      │  :       │
-            &kp INS    &kp N1     &kp N2     &kp N3     &trans         &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &kp COLON
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ DELETE   │  4       │  5       │  6       │          │   │ LEFT     │ DOWN     │ UP       │ RIGHT    │  ;       │
-            &kp DEL    &kp N4     &kp N5     &kp N6     &trans         &kp LARW   &kp DARW   &kp UARW   &kp RARW   &kp SEMI
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ CAPS     │  7       │  8       │  9       │  0       │   │          │          │          │          │          │
-           &caps_word  &kp N7     &kp N8     &kp N9     &kp N0         &trans     &trans     &trans     &trans     &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &kp ESC        &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+&none  &kp LOCKING_CAPS  &none         &none         &none         &none           &none     &kp K_MUTE  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp BACKSPACE  &none
+&none  &kp TAB           &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp DOWN    &kp UP             &kp RIGHT        &kp ENTER      &trans
+&none  &kp GRAVE         &none         &trans        &trans        &trans          &trans    &trans      &trans             &trans           &trans         &trans
+                                       &trans        &trans        &trans          &trans    &trans      &trans
             >;
         };
 
-        left_layer {
+        numbers {
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
+            // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+            // | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │  [       │  {       │  }       │          │   │  ^       │  (       │  )       │  ]       │  ~       │
-            &trans     &kp LBKT   &kp LBRC   &kp RBRC   &trans         &kp CARET  &kp LPAR   &kp RPAR   &kp RBKT   &kp TILDE
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  !       │  @       │  #       │  $       │  %       │   │  *       │  -       │  =       │  \       │  `       │
-            &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT      &kp ASTRK  &kp MINUS  &kp EQUAL  &kp BSLH   &kp GRAVE
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │          │          │   │  &       │  _       │  +       │  │       │          │
-            &trans     &trans     &trans     &trans     &trans         &kp AMPS   &kp UNDER  &kp PLUS   &kp PIPE   &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &trans         &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+&none  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5           &kp F6        &kp F7        &kp F8            &kp F9             &kp F10       &none
+&none  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5           &kp NUMBER_6  &kp NUMBER_7  &kp N8            &kp N9             &kp NUMBER_0  &none
+&none  &kp GRAVE     &trans        &kp F11       &kp F12       &kp BACKSLASH    &kp MINUS     &kp EQUAL     &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SQT       &none
+                                   &trans        &trans        &trans           &trans        &trans        &trans
+            >;
+        };
+
+        system {
+            bindings = <
+&trans  &out OUT_BLE  &out OUT_USB  &out OUT_TOG  &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans        &trans        &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans
+                                    &trans        &trans        &trans          &trans  &trans  &trans
             >;
         };
     };
